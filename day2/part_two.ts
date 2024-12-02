@@ -23,7 +23,7 @@ export async function partTwo() {
 
   let validReports = 0
 
-  reports.forEach((report, i) => {
+  reports.forEach((report) => {
     if (isValidReportWithProblemDampener(report)) {
       validReports++
     }
