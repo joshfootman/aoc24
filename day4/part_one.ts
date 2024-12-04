@@ -1,37 +1,6 @@
-import {
-  type Coordinate,
-  type Direction,
-  DIRECTION,
-  getWordSearch,
-  getWordSearchBounds,
-  type WordSearch,
-} from "./utils"
+import { type Coordinate, type Direction, DIRECTION, getWordSearch, getWordSearchBounds } from "./utils"
 
 const GOAL_WORD = "XMAS"
-
-const isDirectionValid = (wordSearch: WordSearch, { x, y }: Coordinate, direction: Direction) => {
-  const { HEIGHT, WIDTH } = getWordSearchBounds(wordSearch)
-
-  if (direction === DIRECTION.NORTH) {
-    return y >= 3
-  } else if (direction === DIRECTION.NORTH_EAST) {
-    return y >= 3 && x < WIDTH - 3
-  } else if (direction === DIRECTION.EAST) {
-    return x < WIDTH - 3
-  } else if (direction === DIRECTION.SOUTH_EAST) {
-    return y < HEIGHT - 3 && x < WIDTH - 3
-  } else if (direction === DIRECTION.SOUTH) {
-    return y < HEIGHT - 3
-  } else if (direction === DIRECTION.SOUTH_WEST) {
-    return y < HEIGHT - 3 && x >= 3
-  } else if (direction === DIRECTION.WEST) {
-    return x >= 3
-  } else if (direction === DIRECTION.NORTH_WEST) {
-    return y >= 3 && x >= 3
-  }
-
-  throw new Error(`Direction not supported: ${direction}`)
-}
 
 const DIRECTION_MAP = {
   [DIRECTION.NORTH]: {
@@ -73,8 +42,32 @@ export async function partOne() {
 
   const { HEIGHT, WIDTH } = getWordSearchBounds(wordSearch)
 
+  const isDirectionValid = ({ x, y }: Coordinate, direction: Direction) => {
+    const { HEIGHT, WIDTH } = getWordSearchBounds(wordSearch)
+
+    if (direction === DIRECTION.NORTH) {
+      return y >= 3
+    } else if (direction === DIRECTION.NORTH_EAST) {
+      return y >= 3 && x < WIDTH - 3
+    } else if (direction === DIRECTION.EAST) {
+      return x < WIDTH - 3
+    } else if (direction === DIRECTION.SOUTH_EAST) {
+      return y < HEIGHT - 3 && x < WIDTH - 3
+    } else if (direction === DIRECTION.SOUTH) {
+      return y < HEIGHT - 3
+    } else if (direction === DIRECTION.SOUTH_WEST) {
+      return y < HEIGHT - 3 && x >= 3
+    } else if (direction === DIRECTION.WEST) {
+      return x >= 3
+    } else if (direction === DIRECTION.NORTH_WEST) {
+      return y >= 3 && x >= 3
+    }
+
+    throw new Error(`Direction not supported: ${direction}`)
+  }
+
   const checkDirection = (direction: Direction) => (coordinate: Coordinate) => {
-    if (!isDirectionValid(wordSearch, coordinate, direction)) {
+    if (!isDirectionValid(coordinate, direction)) {
       return 0
     }
 
